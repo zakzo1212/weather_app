@@ -1,4 +1,3 @@
-// Replace {YOUR_API_KEY} with your actual Weatherbit API key
 const apiKey = "17edb2ec3d374f8188cbb398663e5929";
 
 const locationElement = document.querySelector(".location");
