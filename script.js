@@ -2,11 +2,13 @@
 const apiKey = "17edb2ec3d374f8188cbb398663e5929";
 
 const locationElement = document.querySelector(".location");
-const temperatureElement = document.querySelector(".temperature");
+const temperatureElement = document.querySelector(".temperature .value");
+const aqiElement = document.querySelector(".aqi .value");
 const conditionsElement = document.querySelector(".conditions");
+const outfitElement = document.querySelector(".outfit");
 const fetchButton = document.getElementById("fetchButton");
 
-// Function to handle fetching weather data
+// Function to handle fetching weather data and providing outfit recommendations
 function fetchWeatherData() {
   // Get user's location coordinates using Geolocation API
   if (navigator.geolocation) {
@@ -21,13 +23,21 @@ function fetchWeatherData() {
         )
           .then((response) => response.json())
           .then((data) => {
-            // Extract the necessary weather data from the API response
-            const { city_name, country_code, temp, weather } = data.data[0];
+            // Extract the necessary weather and AQI data from the API response
+            const { city_name, country_code, temp, weather, aqi } =
+              data.data[0];
 
-            // Update the UI with the weather information
+            // Update the UI with the weather and AQI information
             locationElement.textContent = `${city_name}, ${country_code}`;
-            temperatureElement.textContent = `${temp}°C`;
+            temperatureElement.textContent = temp.toFixed(1);
+            aqiElement.textContent = aqi;
             conditionsElement.textContent = weather.description;
+
+            // Provide outfit recommendations based on weather conditions
+            outfitElement.textContent = getOutfitRecommendation(
+              temp,
+              weather.code
+            );
           })
           .catch((error) => {
             console.error("Error fetching weather data:", error);
@@ -47,3 +57,17 @@ function fetchWeatherData() {
 
 // Event listener for the fetch button
 fetchButton.addEventListener("click", fetchWeatherData);
+
+// Function to provide outfit recommendations based on weather conditions
+function getOutfitRecommendation(temperature, weatherCode) {
+  // Outfit recommendations based on temperature ranges and weather codes
+  if (temperature <= 10) {
+    return "It's chilly! Consider wearing a warm sweater, jeans, and a coat.";
+  } else if (temperature > 10 && temperature <= 20) {
+    return "It's cool! You can go for a light jacket, jeans, and a comfortable shirt.";
+  } else if (temperature > 20 && temperature <= 30) {
+    return "It's warm! Opt for a t-shirt, shorts, and sunglasses.";
+  } else {
+    return "It's hot! Wear light and breathable clothing like a loose-fitting shirt, shorts, and a hat.";
+  }
+}
