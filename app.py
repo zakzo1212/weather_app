@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 import openai
 
 app = Flask(__name__)
-openai.api_key = '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'
+openai.api_key = '{your-openai-api-key}'
 
 @app.route('/outfit-recommendation', methods=['POST'])
 def generate_outfit_recommendation():
