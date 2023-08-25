@@ -16,13 +16,21 @@
         </div>
         <div class="aqi">Air Quality Index: <span class="value"></span></div>
         <div class="conditions"></div>
-      </div>
-      <div class="outfit-container">
-        <h3>Outfit Recommendation:</h3>
         <div class="outfit"></div>
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+      // Get the URL query parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const logging = urlParams.get("logging");
+
+      // Conditionally load JavaScript based on the URL argument
+      if (logging === "True") {
+        document.write('<script src="script_log_heavy.js"></' + "script>");
+      } else {
+        document.write('<script src="script.js"></' + "script>");
+      }
+    </script>
   </body>
 </html>

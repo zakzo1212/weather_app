@@ -1,4 +1,4 @@
-const apiKey = "{your weatherbit API key}";
+const apiKey = "{your_api_key}";
 
 const locationElement = document.querySelector(".location");
 const temperatureElement = document.querySelector(".temperature .value");
